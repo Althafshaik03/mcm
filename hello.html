@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matrix Chain Multiplication Quiz</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #ff004f, #6a00f4);
+            overflow: hidden;
+            position: relative;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+            z-index: 1;
+            overflow-y: auto;
+            max-height: 90vh;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #ff005a;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        .question {
+            margin-bottom: 20px;
+            font-size: 1.2em;
+            color: #333;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .option {
+            background: #ff9f00;
+            color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
+        }
+        .option:hover {
+            background: #ff6f00;
+            transform: scale(1.05);
+        }
+        .correct {
+            background: #28a745 !important;
+            color: #fff;
+        }
+        .incorrect {
+            background: #dc3545 !important;
+            color: #fff;
+        }
+        .disabled {
+            background: #cccccc;
+            color: #666;
+            cursor: not-allowed;
+        }
+        footer {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #333;
+        }
+        /* Live Wallpaper Animation */
+        .live-wallpaper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #ff004f, #6a00f4);
+            background-size: 400% 400%;
+            animation: gradientAnimation 10s ease infinite;
+            z-index: -1;
+        }
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 0%; }
+            50% { background-position: 100% 100%; }
+            100% { background-position: 0% 0%; }
+        }
+        .score-card {
+            font-size: 1.2em;
+            color: #333;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="live-wallpaper"></div>
+    <div class="container">
+        <h1>Matrix Chain Multiplication Quiz</h1>
+        <div id="quiz"></div>
+        <button id="submit" style="margin-top: 20px; padding: 10px 20px; background: #28a745; color: #fff; border: none; border-radius: 5px; cursor: pointer;">Submit</button>
+        <div id="score" class="score-card"></div>
+        <footer>&copy; 2024 Your Name. All rights reserved.</footer>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "What is the main goal of the matrix chain multiplication problem?",
+                options: [
+                    "To maximize the number of scalar multiplications",
+                    "To minimize the number of scalar multiplications",
+                    "To find the inverse of the matrices",
+                    "To sort the matrices in ascending order"
+                ],
+                answer: 1
+            },
+            {
+                question: "Explain the significance of dynamic programming in solving the matrix chain multiplication problem.",
+                options: [
+                    "It helps in sorting matrices",
+                    "It reduces the computational complexity",
+                    "It increases the number of multiplications",
+                    "It helps in finding the inverse"
+                ],
+                answer: 1
+            },
+            {
+                question: "How is the optimal parenthesization of a matrix product determined?",
+                options: [
+                    "By guessing and checking",
+                    "By using dynamic programming",
+                    "By sorting the matrices",
+                    "By finding the inverse of matrices"
+                ],
+                answer: 1
+            },
+            {
+                question: "Describe the computational complexity of the naive method of matrix multiplication.",
+                options: [
+                    "O(n)",
+                    "O(n^2)",
+                    "O(n^3)",
+                    "O(log n)"
+                ],
+                answer: 2
+            },
+            {
+                question: "Provide an example of a real-world application where matrix chain multiplication is used.",
+                options: [
+                    "Text processing",
+                    "Image compression",
+                    "Computer graphics",
+                    "Network routing"
+                ],
+                answer: 2
+            },
+            {
+                question: "How does the order of matrix multiplication affect the number of scalar multiplications?",
+                options: [
+                    "It doesn't affect the number",
+                    "It can either increase or decrease the number",
+                    "It always increases the number",
+                    "It always decreases the number"
+                ],
+                answer: 1
+            },
+            {
+                question: "Define what is meant by 'scalar multiplication' in the context of matrices.",
+                options: [
+                    "Multiplying a matrix by a scalar value",
+                    "Adding two matrices",
+                    "Multiplying two matrices",
+                    "Subtracting two matrices"
+                ],
+                answer: 0
+            },
+            {
+                question: "Why is it important to minimize the number of scalar multiplications in matrix chain multiplication?",
+                options: [
+                    "To reduce computational time and cost",
+                    "To increase the size of the matrices",
+                    "To make the matrices more complex",
+                    "To sort the matrices in ascending order"
+                ],
+                answer: 0
+            },
+            {
+                question: "What are the dimensions of the resulting matrix when multiplying a 5x10 matrix with a 10x3 matrix?",
+                options: [
+                    "5x3",
+                    "10x10",
+                    "5x10",
+                    "10x3"
+                ],
+                answer: 0
+            },
+            {
+                question: "In Example 2, what is the number of multiplications for the parenthesization ((AB)(CD))?",
+                options: [
+                    "5000",
+                    "9000",
+                    "12000",
+                    "15000"
+                ],
+                answer: 1
+            },
+            {
+                question: "What are the dimensions of matrix C in Example 1?",
+                options: [
+                    "5x60",
+                    "30x5",
+                    "10x30",
+                    "5x10"
+                ],
+                answer: 0
+            },
+            {
+                question: "Describe the role of the dynamic programming table in solving the matrix chain multiplication problem.",
+                options: [
+                    "It stores the matrices",
+                    "It stores the optimal solutions of subproblems",
+                    "It sorts the matrices",
+                    "It finds the inverse of matrices"
+                ],
+                answer: 1
+            },
+            {
+                question: "Explain why multiple optimal parenthesizations can exist for a given matrix chain multiplication problem.",
+                options: [
+                    "Due to different matrix dimensions",
+                    "Because the matrices are equal",
+                    "Because the order of operations doesn't matter",
+                    "Due to equal cost in different parenthesizations"
+                ],
+                answer: 3
+            },
+            {
+                question: "How does the optimal parenthesization change with the number of matrices involved?",
+                options: [
+                    "It becomes simpler",
+                    "It becomes more complex",
+                    "It doesn't change",
+                    "It always results in the same parenthesization"
+                ],
+                answer: 1
+            },
+            {
+                question: "What is the computational complexity of the matrix chain multiplication problem using dynamic programming?",
+                options: [
+                    "O(n)",
+                    "O(n^2)",
+                    "O(n^3)",
+                    "O(n^4)"
+                ],
+                answer: 2
+            },
+            {
+                question: "How can the matrix chain multiplication problem be represented visually?",
+                options: [
+                    "Using a flowchart",
+                    "Using a binary tree",
+                    "Using a dynamic programming table",
+                    "Using a graph"
+                ],
+                answer: 2
+            },
+            {
+                question: "In matrix chain multiplication, what does 'parenthesization' refer to?",
+                options: [
+                    "The order of matrix multiplications",
+                    "The dimensions of matrices",
+                    "The number of matrices",
+                    "The data types of matrices"
+                ],
+                answer: 0
+            },
+            {
+                question: "What is a key benefit of using dynamic programming for matrix chain multiplication?",
+                options: [
+                    "It reduces memory usage",
+                    "It simplifies the multiplication process",
+                    "It finds an exact solution faster",
+                    "It avoids redundant calculations"
+                ],
+                answer: 3
+            }
+        ];
+
+        function shuffleOptions(options, answerIndex) {
+            // Shuffle options and return the new answer index
+            const shuffled = options.map((option, index) => ({ option, index }));
+            shuffled.sort(() => Math.random() - 0.5);
+            const newAnswerIndex = shuffled.findIndex(o => o.index === answerIndex);
+            return { shuffledOptions: shuffled.map(o => o.option), newAnswerIndex };
+        }
+
+        function loadQuiz() {
+            const quizContainer = document.getElementById('quiz');
+            let score = 0;
+
+            questions.forEach((q, index) => {
+                const { shuffledOptions, newAnswerIndex } = shuffleOptions(q.options, q.answer);
+                
+                const questionElem = document.createElement('div');
+                questionElem.classList.add('question');
+                questionElem.innerHTML = `<p>${index + 1}. ${q.question}</p>`;
+                
+                const optionsElem = document.createElement('div');
+                optionsElem.classList.add('options');
+                
+                shuffledOptions.forEach((option, i) => {
+                    const optionElem = document.createElement('div');
+                    optionElem.classList.add('option');
+                    optionElem.innerText = option;
+                    optionElem.onclick = () => {
+                        // Lock options after selection
+                        const options = optionsElem.querySelectorAll('.option');
+                        options.forEach(opt => opt.classList.add('disabled'));
+                        
+                        if (i === newAnswerIndex) {
+                            optionElem.classList.add('correct');
+                            score++;
+                        } else {
+                            optionElem.classList.add('incorrect');
+                        }
+                        
+                        setTimeout(() => {
+                            optionElem.classList.remove('correct', 'incorrect');
+                        }, 2000);
+                    };
+                    optionsElem.appendChild(optionElem);
+                });
+
+                questionElem.appendChild(optionsElem);
+                quizContainer.appendChild(questionElem);
+            });
+
+            document.getElementById('submit').onclick = () => {
+                document.getElementById('score').innerText = `Your score: ${score}/${questions.length}`;
+            };
+        }
+
+        document.addEventListener('DOMContentLoaded', loadQuiz);
+    </script>
+</body>
+</html>

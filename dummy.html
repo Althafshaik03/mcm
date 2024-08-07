@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matrix Chain Multiplication</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            position: relative;
+            background-color: #ffffff;
+            /* White background for the body */
+        }
+
+        .background-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            filter: grayscale(100%) contrast(100%);
+            /* Black and white effect */
+        }
+
+        header {
+            background-color: rgba(0, 0, 0, 0.6);
+            /* Dark background for header */
+            color: #ffffff;
+            padding: 40px 0;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-text {
+            position: relative;
+            font-size: 4em;
+            margin: 0;
+            color: #ffffff;
+            /* White color for the text */
+            display: inline-block;
+            font-family: 'Courier New', Courier, monospace;
+            z-index: 1;
+            transition: color 0.3s;
+        }
+
+        .header-text::before,
+        .header-text::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            color: #6cc4ca;
+            /* White color for glitch effect */
+            overflow: hidden;
+            z-index: -1;
+            background: transparent;
+            /* Ensure background is transparent */
+            clip: rect(0, 0, 0, 0);
+            /* Hide the text initially */
+            transition: clip 0.5s, transform 0.3s;
+            /* Smooth transition */
+        }
+
+        .header-text:hover::before,
+        .header-text:hover::after {
+            animation: glitch-anim 1s infinite linear alternate;
+        }
+
+        .header-text::before {
+            animation: none;
+            /* No animation by default */
+            color: #1d1111;
+            /* White color */
+        }
+
+        .header-text::after {
+            animation: none;
+            /* No animation by default */
+            color: #52bdb7;
+            /* Slightly lighter white for contrast */
+            z-index: -2;
+        }
+
+        @keyframes glitch-1 {
+  0% {
+    clip: rect(132px, auto, 101px, 30px);
+  }
+  5% {
+    clip: rect(17px, auto, 94px, 30px);
+  }
+  10% {
+    clip: rect(40px, auto, 66px, 30px);
+  }
+  15% {
+    clip: rect(87px, auto, 82px, 30px);
+  }
+  20% {
+    clip: rect(137px, auto, 61px, 30px);
+  }
+  25% {
+    clip: rect(34px, auto, 14px, 30px);
+  }
+  30% {
+    clip: rect(133px, auto, 74px, 30px);
+  }
+  35% {
+    clip: rect(76px, auto, 107px, 30px);
+  }
+  40% {
+    clip: rect(59px, auto, 130px, 30px);
+  }
+  45% {
+    clip: rect(29px, auto, 84px, 30px);
+  }
+  50% {
+    clip: rect(22px, auto, 67px, 30px);
+  }
+  55% {
+    clip: rect(67px, auto, 62px, 30px);
+  }
+  60% {
+    clip: rect(10px, auto, 105px, 30px);
+  }
+  65% {
+    clip: rect(78px, auto, 115px, 30px);
+  }
+  70% {
+    clip: rect(105px, auto, 13px, 30px);
+  }
+  75% {
+    clip: rect(15px, auto, 75px, 30px);
+  }
+  80% {
+    clip: rect(66px, auto, 39px, 30px);
+  }
+  85% {
+    clip: rect(133px, auto, 73px, 30px);
+  }
+  90% {
+    clip: rect(36px, auto, 128px, 30px);
+  }
+  95% {
+    clip: rect(68px, auto, 103px, 30px);
+  }
+  100% {
+    clip: rect(14px, auto, 100px, 30px);
+  }
+}
+@keyframes glitch-2 {
+  0% {
+    clip: rect(129px, auto, 36px, 30px);
+  }
+  5% {
+    clip: rect(36px, auto, 4px, 30px);
+  }
+  10% {
+    clip: rect(85px, auto, 66px, 30px);
+  }
+  15% {
+    clip: rect(91px, auto, 91px, 30px);
+  }
+  20% {
+    clip: rect(148px, auto, 138px, 30px);
+  }
+  25% {
+    clip: rect(38px, auto, 122px, 30px);
+  }
+  30% {
+    clip: rect(69px, auto, 54px, 30px);
+  }
+  35% {
+    clip: rect(98px, auto, 71px, 30px);
+  }
+  40% {
+    clip: rect(146px, auto, 34px, 30px);
+  }
+  45% {
+    clip: rect(134px, auto, 43px, 30px);
+  }
+  50% {
+    clip: rect(102px, auto, 80px, 30px);
+  }
+  55% {
+    clip: rect(119px, auto, 44px, 30px);
+  }
+  60% {
+    clip: rect(106px, auto, 99px, 30px);
+  }
+  65% {
+    clip: rect(141px, auto, 74px, 30px);
+  }
+  70% {
+    clip: rect(20px, auto, 78px, 30px);
+  }
+  75% {
+    clip: rect(133px, auto, 79px, 30px);
+  }
+  80% {
+    clip: rect(78px, auto, 52px, 30px);
+  }
+  85% {
+    clip: rect(35px, auto, 39px, 30px);
+  }
+  90% {
+    clip: rect(67px, auto, 70px, 30px);
+  }
+  95% {
+    clip: rect(71px, auto, 103px, 30px);
+  }
+  100% {
+    clip: rect(83px, auto, 40px, 30px);
+  }
+}
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .content {
+            margin-bottom: 20px;
+        }
+
+        h1,
+        h2 {
+            color: #004d40;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .nav a {
+            text-decoration: none;
+            color: #ffffff;
+            background-color: #004d40;
+            padding: 15px 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, transform 0.3s;
+            font-size: 18px;
+            text-align: center;
+            display: block;
+        }
+
+        .nav a:hover {
+            background-color: #003d34;
+            transform: scale(2.05);
+        }
+
+        .example img {
+            max-width: 100%;
+            border-radius: 8px;
+            border: 2px solid #004d40;
+        }
+
+        .menu {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(0, 150, 136, 0.7);
+            padding: 15px 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .menu .logo {
+            font-size: 1.8em;
+            color: #ffffff;
+        }
+
+        .menu ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 20px;
+        }
+
+        .menu li {
+            position: relative;
+        }
+
+        .menu a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            background-color: #00796b;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s;
+            font-size: 26px;
+        }
+
+        .menu a:hover {
+            background-color: #004d40;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #004d40;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            border-radius: 5px;
+            min-width: 160px;
+            /* Ensures dropdown menu has sufficient width */
+        }
+
+        .dropdown-content a {
+            padding: 10px 20px;
+            display: block;
+            text-align: left;
+            font-size: 26px;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #003d34;
+        }
+
+        .menu li:hover .dropdown-content {
+            display: block;
+            animation: dropdown-slide 0.7s ease-in-out;
+        }
+
+        .dropdown-icon {
+            font-size: 2em;
+            color: #ffffff;
+            transition: transform 0.7s ease;
+            /* Smooth scaling */
+        }
+
+        .dropdown-icon:hover {
+            transform: scale(2.0);
+            /* Expand the icon on hover */
+        }
+
+        @keyframes dropdown-slide {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav a {
+                margin-bottom: 10px;
+                font-size: 16px;
+            }
+
+            .menu ul {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .menu .dropdown-content {
+                position: static;
+                display: block;
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <video class="background-video" autoplay muted loop>
+        <source src="background-video.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <header>
+        <div class="header-text" data-text="Matrix Chain Multiplication">Matrix Chain Multiplication</div>
+    </header>
+    <div class="menu">
+        <div class="logo">Logo</div>
+        <ul>
+            <li><a href="#introduction">Introduction</a></li>
+            <li><a href="#example">Example</a></li>
+            <li><a href="https://rosulek.github.io/vamonos/demos/matrix-chain.html">Main Simulation</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li>
+                <a href="#" class="dropdown-icon"><i class="fas fa-cogs"></i></a>
+                <div class="dropdown-content">
+                    <a href="https://www.mimuw.edu.pl/~erykk/algovis/mcm.html">Beginner Simulation</a>
+                    <a href="path/to/content">Content</a>
+                    <a href="path/to/quiz">Quiz</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="container">
+        <div id="introduction" class="content">
+            <h2>Introduction</h2>
+            <p>Matrix Chain Multiplication is a method used to multiply a chain of matrices in an optimal way to
+                minimize the number of scalar multiplications. This is crucial in various computational applications
+                where matrix multiplications are frequent.</p>
+        </div>
+        <div id="example" class="content example">
+            <h2>Example</h2>
+            <p>Consider matrices A, B, and C with dimensions 10x30, 30x5, and 5x60 respectively. The optimal way to
+                multiply these matrices is determined by the sequence that requires the least number of operations.</p>
+            <img src="rvcelogo.jpg"
+                alt="Illustration showing the optimal way to multiply matrices A, B, and C to minimize operations.">
+        </div>
+        <div id="contact" class="content">
+            <h2>Contact</h2>
+            <p>If you have any questions or feedback, feel free to reach out!</p>
+        </div>
+    </div>
+</body>
+
+</html>
