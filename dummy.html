@@ -11,8 +11,7 @@
             font-family: 'Helvetica Neue', Arial, sans-serif;
             margin: 0;
             padding: 0;
-            overflow: hidden;
-            position: relative;
+            overflow-x: hidden; /* Ensure horizontal scroll is hidden */
             background-color: #000; /* Black background for better contrast */
         }
         .background-video {
@@ -121,6 +120,8 @@
             background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white background */
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
             border-radius: 8px;
+            overflow-y: auto; /* Enable vertical scrolling */
+            max-height: calc(100vh - 60px); /* Adjust height for scrolling */
         }
         .content {
             margin-bottom: 20px;
@@ -239,7 +240,7 @@
     </header>
     <div class="menu">
         <ul>
-            <li><a href="introduction.html">Introduction</a></li>
+            <li><a href="index.html">Introduction</a></li>
             <li>
                 <a href="#">Simulation</a>
                 <div class="dropdown-content">
@@ -270,13 +271,36 @@
         </div>
         <div id="example" class="content example">
             <h2>Example</h2>
-            <p>Consider matrices A, B, and C with dimensions 10x30, 30x5, and 5x60 respectively. The optimal way to multiply these matrices is determined by the sequence that requires the least number of operations.</p>
-            <img src="matrix_chain_example.png" alt="Illustration showing the optimal way to multiply matrices A, B, and C to minimize operations.">
+            <p>Consider matrices A, B, C and D with dimensions 5x5, 5x4, 4x8 and 8x2 respectively. The optimal way to multiply these matrices is determined by the sequence that requires the least number of operations.</p>
+            <img src="matrix_chain_example.png" alt="Illustration showing the optimal way to multiply matrices A, B, C and D to minimize operations.">
         </div>
         <div id="contact" class="content">
             <h2>Contact</h2>
-            <p>If you have any questions or feedback, feel free to reach out!</p>
+            <p>If you have any questions or feedback, feel free to reach out! +91 9876543210</p>
         </div>
     </div>
+    <!-- Add JavaScript at the end of the body -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Create an Audio object
+            const clickSound = new Audio('click-sound.mp3'); // Path to your click sound file
+
+            // Preload the audio
+            clickSound.preload = 'auto';
+
+            // Add event listener to all menu links
+            const menuLinks = document.querySelectorAll('.menu a');
+            menuLinks.forEach(link => {
+                link.addEventListener('click', (event) => {
+                    clickSound.play(); // Play the sound on click
+                    // Use setTimeout to ensure sound plays before navigating
+                    setTimeout(() => {
+                        window.open(link.href, link.target); // Open the link in the specified target (new tab)
+                    }, 100); // Adjust delay if necessary
+                    event.preventDefault(); // Prevent the default navigation to avoid double navigation
+                });
+            });
+        });
+    </script>
 </body>
 </html>
