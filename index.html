@@ -108,8 +108,8 @@
             margin: 10px 0;
         }
         .videos iframe {
-            width: 100%;
-            height: 315px;
+            width: 800px;
+            height:500px;
             border: none;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -136,6 +136,20 @@
                 height: 200px;
             }
         }
+        .downloads a {
+    display: inline-block;
+    padding: 10px;
+    margin: 10px 0;
+    color: #ffffff;
+    background-color: #00796b; /* Teal button */
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease;
+}
+.downloads a:hover {
+    background-color: #004d40; /* Darker teal on hover */
+}
     </style>
 </head>
 <body>
@@ -165,6 +179,11 @@
             <h2>Videos</h2>
             <iframe src="https://www.youtube.com/embed/aOO67pI3h7A?si=4Le2nZQRiTYExqlT" title="Matrix Chain Multiplication Explained" allowfullscreen></iframe>
             <iframe src="https://www.youtube.com/embed/_WncuhSJZyA?si=LxoGzLbmPND09JQd" title="Matrix Chain Multiplication Tutorial" allowfullscreen></iframe>
+        </div>
+        <div class="section downloads">
+            <h2>Download Resources</h2>
+            <a href="matrix_chain_guide.pdf" download>Download Matrix Chain Multiplication Guide</a>
+            <a href="matrix_chain_examples.pdf" download>Download Matrix Chain Multiplication Examples</a>
         </div>
     </div>
     <footer>
